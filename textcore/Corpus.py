@@ -14,8 +14,14 @@ from collections import Counter
 
 import cottoncandy as cc
 
+# for python2/3 compatibility
+if hasattr(itertools, "imap"):
+    imap = itertools.imap
+else:
+    imap = map
+
 #from ngram import ngram_string
-from corpustools import gen_sentences_from_string, strip_string, word_index, replace_word_ind
+from .corpustools import gen_sentences_from_string, strip_string, word_index, replace_word_ind
 
 logger = logging.getLogger("textcore.Corpus")
 
@@ -116,7 +122,7 @@ class Corpus(object):
             ## Check to make sure the thing we're extracting has correct extension ##
             efile = tar.extractfile(finfo)
             if finfo.name.endswith(tarext) and efile:
-                fstr = strip_string(efile.read())
+                fstr = strip_string(str(efile.read()))
                 logger.debug("Yielding file %s" % finfo.name)
                 yield fstr
             tar.members = [] ## Hack to reduce memory usage.  Fucking sucks. ##
@@ -147,7 +153,7 @@ class Corpus(object):
         Each document is yielded as a list of sentences, with each sentence as a list of words.
         """
         ## Build an iterator chain out of all the files to read
-        dociter = itertools.chain.from_iterable(itertools.imap(self._get_corpus_iterator, self.filenames))
+        dociter = itertools.chain.from_iterable(imap(self._get_corpus_iterator, self.filenames))
         
         ## Slice down to only the documents we want if we only want a limited number
         if self.ndocs:
@@ -165,7 +171,7 @@ class Corpus(object):
                 logger.info("Read %d documents"%ndone)
 
             ## Convert document to a list of lists of words
-            sentences = strip_string(doc).split(".")
+            sentences = strip_string(str(doc)).split(".")
             sentwords = filter(bool, [s.strip().split() for s in sentences])
             sentwords = [[w.strip('\'') for w in s] for s in sentwords]
             

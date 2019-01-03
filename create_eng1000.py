@@ -15,7 +15,7 @@ def get_vocab(vocab_data_path, top_words=10000):
     # load vocab data and extract selected set
     vocabdata = np.load(vocab_data_path)
     words = set(vocabdata['sorted_vocab'][:top_words]) | set(vocabdata['stimvocab'])
-    vocab = map(str, list(words))
+    vocab = [str(w.decode()) for w in words]
     vocab.append('unk') # append 'unk' token that will take the place of unknown words
     return vocab
 

@@ -108,7 +108,7 @@ class SemanticModel(object):
         logger.debug("Saving file: %s"%filename)
         shf = tables.open_file(filename, mode="w", title="SemanticModel")
         shf.create_array("/", "data", self.data)
-        shf.create_array("/", "vocab", self.vocab)
+        shf.create_array("/", "vocab", np.array(self.vocab, dtype='|S'))
         shf.close()
         logger.debug("Done saving file..")
 

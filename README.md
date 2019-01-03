@@ -1,6 +1,10 @@
 # English1000
 
-This code can be used to create new English1000 word embedding spaces. It automatically reads from corpora stored in [corral](http://c3-dtn01.corral.tacc.utexas.edu:9002), and uses them to generate vocabulary files as well as co-occurrence matrices.
+This code can be used to create new English1000 word embedding spaces. It automatically reads from corpora stored in [corral](http://c3-dtn01.corral.tacc.utexas.edu:9002), and uses them to generate vocabulary files as well as co-occurrence matrices. These scripts require cottoncandy and numpy to run (and those are the only dependencies..?). To install them, run this line in this directory:
+
+```bash
+pip install -r requirements.txt
+```
 
 ## Step 1: Create a vocab
 To create a new English1000 embedding space you first must create a vocabulary. This can be done using the `create_vocab.py` script, which (1) counts all the words in the standard corpora (this takes a while), and (2) finds all the unique words in the stimulus transcripts. The results are stored in an `npz` file of your choosing, which will have: `sorted_vocab`, all the words that appear in any of the standard corpora sorted by (decreasing) frequency; `sorted_freq`, the number of occurrences for each word; and `stimvocab`, the list of all words appearing in the stimulus transcripts.

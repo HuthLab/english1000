@@ -23,8 +23,7 @@ python create_eng1000.py my_vocab.npz my_english1000.hdf5
 ## Step 3: Use embeddings
 Finally, you can load and use the embeddings with the [SemanticModel](SemanticModel.py) class.
 
-```
-$ ipython
+```python
 In [1]: from SemanticModel import SemanticModel
 In [2]: sm = SemanticModel.load("my_english1000.hdf5")
 In [3]: sm.find_words_like_word('finger')

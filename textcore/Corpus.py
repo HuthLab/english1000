@@ -415,7 +415,7 @@ def stream_gzip_decompress(stream):
     for chunk in stream:
         dchunk = dec.decompress(chunk)
         if dchunk:
-            next_line += dchunk
+            next_line += dchunk.decode()
             if "\n" in next_line:
                 splits = next_line.split("\n")
                 next_line = splits[-1]

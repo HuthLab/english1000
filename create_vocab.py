@@ -32,7 +32,7 @@ def create_vocab(outfile):
 
     ## Find all words in sub-corpus that we want to have full coverage on
     stimcorpus = textcore.Corpus(stim_transcripts)
-    stimvocab = list(np.array(stimcorpus.get_vocabulary().keys(), dtype='|S50'))
+    stimvocab = list(np.array(list(stimcorpus.get_vocabulary().keys()), dtype='|S50'))
 
     np.savez(outfile,
              sorted_vocab=sorted_vocab,

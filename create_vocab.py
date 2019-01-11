@@ -22,7 +22,7 @@ def create_vocab(outfile):
     ## Discard words with 50 or more characters
     wordlens = np.array(list(map(len, vocab)))
     sel_words = wordlens < 50
-    sel_vocab = np.array(vocab)[sel_words]
+    sel_vocab = np.array(vocab, dtype='|S50')[sel_words]
     sel_wordfreq = wordfreq[sel_words]
 
     ## Sort vocab according to frequency
@@ -32,11 +32,11 @@ def create_vocab(outfile):
 
     ## Find all words in sub-corpus that we want to have full coverage on
     stimcorpus = textcore.Corpus(stim_transcripts)
-    stimvocab = list(stimcorpus.get_vocabulary().keys())
+    stimvocab = list(np.array(stimcorpus.get_vocabulary().keys(), dtype='|S50'))
 
-    np.savez(outfile, 
-             sorted_vocab=sorted_vocab, 
-             sorted_freq=sorted_freq, 
+    np.savez(outfile,
+             sorted_vocab=sorted_vocab,
+             sorted_freq=sorted_freq,
              stimvocab=stimvocab)
 
 if __name__ == "__main__":
